@@ -155,7 +155,7 @@ for (i in 2:k) {
 }
 suppose_data["pn"] <- sum(suppose_data$frequency) * suppose_data$p
 
-result <- sum((suppose_data$freq - suppose_data$pn) ^ 2 / suppose_data$pn)
+result <- sum((suppose_data$frequency - suppose_data$pn) ^ 2 / suppose_data$pn)
 
 if (qchisq(1-0.05, k - 2) > result) {
   print("yes")
@@ -235,17 +235,18 @@ if (z < qchisq(0.99, n-1) && z > qchisq(0.01, n-1)) {
 # Ex 11
 
 
-#мат ожид
+#РјР°С‚ РѕР¶РёРґ
 n <- sum(data1$frequency)
 n1 <- sum(sub1$frequency)
-z <- (stat$mean_value[1] - stat$mean_value[2]) / sqrt(stat$unbiased_variance[1] / n + stat$unbiased_variance[2] / n1)
+sp <- ((n - 1) * stat$unbiased_variance[1] + (n1 - 1) * stat$unbiased_variance[2]) / ((n - 1) + (n1 - 1))
+z <- (stat$mean_value[1] - stat$mean_value[2]) / sqrt(sp / n + sp / n1)
 if (z > qt(0.05, n + n1 - 1) && z < qt(0.95, n + n1 - 1)) {
   print("yes")
 } else {
   print("no")
 }
 
-#дисперсии, критерий фишера
+#РґРёСЃРїРµСЂСЃРёРё, РєСЂРёС‚РµСЂРёР№ С„РёС€РµСЂР°
 z <- stat$unbiased_variance[2] / stat$unbiased_variance[1]
 if (z > qf(0.05, n1-1, n-1) && z < qf(0.95, n1-1, n-1)) {
   print("yes")
@@ -254,4 +255,3 @@ if (z > qf(0.05, n1-1, n-1) && z < qf(0.95, n1-1, n-1)) {
 }
 
 ###
-
